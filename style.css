@@ -1,0 +1,258 @@
+@font-face {
+    font-family: "MyriadProRegular";
+    src: url("fonts/MyriadProRegular/MyriadProRegular.eot");
+    src: url("fonts/MyriadProRegular/MyriadProRegular.eot?#iefix")format("embedded-opentype"),
+    url("fonts/MyriadProRegular/MyriadProRegular.woff") format("woff"),
+    url("fonts/MyriadProRegular/MyriadProRegular.ttf") format("truetype");
+    font-style: normal;
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: HelveticaNeueLTPro-ThEx;
+    src: url(fonts/HelveticaNeueLTPro-ThEx.otf);
+}
+
+@font-face {
+    font-family: HelveticaNeueLTPro-BdEx;
+    src: url(fonts/HelveticaNeueLTPro-BdEx.otf);
+}
+
+body{
+    width: 100%;
+    margin: 0 auto;
+    max-width: 775px;
+}
+
+.container{
+    width: 100%;
+    max-width: 675px;
+    min-width: 421px;
+    margin: 0 auto;
+    color: #093500;
+    font-family: HelveticaNeueLTPro-ThEx, serif;
+}
+
+.header{
+    width: 100%;
+    height: 80px;
+    background: url("images/bg_header.png");
+}
+
+.header p{
+    font-size: 32px;
+    color: white;
+    margin: 0;
+    padding-top: 24px;
+    padding-left: 35px;
+    font-family: HelveticaNeueLTPro-ThEx, serif;
+}
+
+.bold{
+    font-family: HelveticaNeueLTPro-BdEx, serif;
+}
+
+.menu ul {
+    display: inline-flex;
+    font-size: 19px;
+    list-style: none;
+    padding: 0;
+    float: left;
+    position: relative;
+    font-family: MyriadProRegular, serif;
+    margin: 28px 0 28px 0;
+}
+
+.menu ul li:before {
+    content: " ";
+    background-image: url("images/icon_menu.png");
+    display: block;
+    float: left;
+    width: 9px;
+    height: 9px;
+    margin: 6px 20px 0 20px;
+    white-space: pre-wrap;
+}
+
+.menu ul li:first-child:before{
+    content: " ";
+    background-image: none;
+    display: block;
+    margin-left: 5px;
+    list-style: none;
+}
+
+.menu ul li a {
+    white-space: nowrap;
+    text-decoration: none;
+    color: #093500;
+}
+
+@media (max-width: 424px) {
+    .menu ul{
+        display:inline-block;
+    }
+}
+
+.pre_content{
+    background: url("images/image.png") no-repeat;
+    height: 191px;
+    font-size: 11px;
+    clear: both;
+}
+
+.pre_content p{
+    margin-top: 0;
+    font-family: MyriadProRegular, serif;
+    line-height: 16px;
+}
+
+.pre_content p:last-child:after{
+    content: " ";
+    background-image: url("images/icon_arrow.png");
+    display: block;
+    width: 9px;
+    height: 5px;
+    margin-top: 10px;
+}
+
+.title{
+    font-size: 32px;
+    float: right;
+    padding-bottom: 24px;
+    padding-top: 39px;
+    padding-right: 84px;
+    margin: 0;
+    font-family: HelveticaNeueLTPro-ThEx, serif;
+}
+
+.after_title{
+    float: right;
+    width: 325px;
+    padding-right: 33px;
+}
+
+@media (max-width: 500px) {
+    .title{
+        padding-right: 0px;
+    }
+    .after_title{
+        padding-right: 0px;
+    }
+}
+
+.content p.par{
+    font-size: 20px;
+}
+
+.paragraph_color{
+    color: #80a60f;
+    margin-bottom: 0;
+}
+
+.content{
+    margin-top: 20px;
+    position: relative;
+}
+
+.content:after {
+    content: " ";
+    display: block;
+    clear: both;
+}
+
+.content .left-colom {
+    position: absolute;
+    height: 100%;
+}
+
+.title_content{
+    font-size: 11px;
+    padding-bottom: 25px;
+    padding-left: 0;
+    font-family: MyriadProRegular, serif;
+}
+
+.left-colom{
+    width: 38%;
+    float: left;
+    border-right: 1px solid #eeeefb;
+    padding-right: 5px;
+}
+
+.left-colom p{
+    margin-top: 0;
+    font-size: 10px;
+    margin-left: 28px;
+    font-family: MyriadProRegular, serif;
+    line-height: 16px;
+}
+
+.left-colom p:last-child:after{
+    content: " ";
+    background-image: url("images/icon_arrow.png");
+    display: block;
+    width: 9px;
+    height: 5px;
+    margin-top: 10px;
+}
+
+.right-colom{
+    width: 61%;
+    float: right;
+    padding-bottom: 10px;
+}
+
+@media (max-width: 450px) {
+    .right-colom{
+        float: none;
+        width: 100%;
+        padding-top: 175px;
+    }
+    .left-colom{float: none;
+        width: 100%
+    }
+}
+
+.right-colom > div {
+    padding-bottom: 3px;
+    border-bottom: 1px solid #eeeefb;
+    margin-bottom: 15px;
+    margin-left: 11px;
+}
+
+.right-colom > div:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
+}
+
+.right-colom p{
+    margin-top: 0;
+    font-size: 10px;
+    font-family: MyriadProRegular, serif;
+    line-height: 16px;
+}
+
+img{
+    float: left;
+    padding-right: 21px;
+    margin-left: 6px;
+    max-width: 100%;
+    height: auto;
+}
+
+.line_footer{
+    height: 5px;
+    background: #eeeefb;
+    border: 0;
+    clear: both;
+}
+
+.footer{
+    clear: both;
+    font-size: 10px;
+    font-family: MyriadProRegular, serif;
+    margin-top:20px;
+    margin-left: 26px;
+}
+

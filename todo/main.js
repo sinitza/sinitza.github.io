@@ -12,26 +12,32 @@ window.addEventListener('load', function () {
 
     view();
 
-    document
-        .getElementById('add')
-        .addEventListener('click', function (event) {
-        if (localStorage.getItem('items')){
+    input.addEventListener('keypress', function (event) {
+        if (event.keyCode === 13) {
+            add();
+        }
+    });
+
+    document.getElementById('add').addEventListener('click', add);
+
+    function add() {
+        if (localStorage.getItem('items')) {
             arrayTasks = JSON.parse(localStorage.getItem('items'));
         } else {
             arrayTasks = [];
         }
-            if (input.value) {
-                arrayTasks.push({
-                    value: input.value,
-                    done: false
-                });
-                input.value = '';
-                localStorage.setItem('items', JSON.stringify(arrayTasks));
-                render();
-            } else {
-                alert('you do not write');
-            }
-    });
+        if (input.value) {
+            arrayTasks.push({
+                value: input.value,
+                done: false
+            });
+            input.value = '';
+            localStorage.setItem('items', JSON.stringify(arrayTasks));
+            render();
+        } else {
+            alert('you do not write');
+        }
+    }
 
     function view() {
         var array = JSON.parse(localStorage.getItem('items')) || [];
@@ -39,7 +45,7 @@ window.addEventListener('load', function () {
         for (var i = 0; i < array.length; i++) {
             var li = document.createElement('li');
             li.innerText = array[i].value;
-            if (array[i].done === true){
+            if (array[i].done === true) {
                 li.classList.add('checked');
             }
             var editBtn = editButton.cloneNode();
@@ -58,7 +64,7 @@ window.addEventListener('load', function () {
         var array = JSON.parse(localStorage.getItem('items'));
 
         var li = document.createElement('li');
-        li.innerText = array[array.length-1].value;
+        li.innerText = array[array.length - 1].value;
         var editBtn = editButton.cloneNode();
         var removeBtn = removeButton.cloneNode();
         editBtn.addEventListener('click', editHandler);
@@ -78,7 +84,7 @@ window.addEventListener('load', function () {
         var inputEdit = document.getElementById('edit-input');
         inputEdit.value = this.parentElement.innerText;
 
-        document.getElementById('save').addEventListener('click',function (event) {
+        document.getElementById('save').addEventListener('click', function (event) {
             var btnEdit = document.querySelector('button.edit.checked');
             if (btnEdit) {
                 var a = btnEdit.parentElement.firstChild.nodeValue;
@@ -86,15 +92,15 @@ window.addEventListener('load', function () {
                 btnEdit.classList.remove('checked');
                 popup.style.display = 'none';
             }
-            for (var i=0; i < array.length; i++){
-                if (array[i].value === a){
+            for (var i = 0; i < array.length; i++) {
+                if (array[i].value === a) {
                     array[i].value = inputEdit.value;
                 }
             }
             localStorage.setItem('items', JSON.stringify(array));
         });
 
-        document.getElementById('cancel').addEventListener('click',function (event) {
+        document.getElementById('cancel').addEventListener('click', function (event) {
             popup.style.display = 'none';
         });
     }
@@ -109,7 +115,7 @@ window.addEventListener('load', function () {
                 this.parentElement.remove();
             }
         }
-        array.splice(index,1);
+        array.splice(index, 1);
 
         localStorage.setItem('items', JSON.stringify(array));
         recount();
@@ -122,7 +128,7 @@ window.addEventListener('load', function () {
             var el = event.toElement;
             el.classList.toggle('checked');
 
-            for (var i = 0; i < array.length; i++){
+            for (var i = 0; i < array.length; i++) {
                 if (el.className === 'checked' && array[i].value === el.firstChild.nodeValue) {
                     array[i].done = true;
                 } else {
@@ -132,7 +138,7 @@ window.addEventListener('load', function () {
                 console.log(array[i].done);
             }
 
-        localStorage.setItem('items', JSON.stringify(array));
+            localStorage.setItem('items', JSON.stringify(array));
         }
     }
 

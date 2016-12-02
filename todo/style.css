@@ -52,13 +52,11 @@ li button {
 }
 
 li button.remove {
-    background-color: red;
-    color: white;
+    background: url("images/delete.png");
 }
 
 li button.edit {
-    background-color: green;
-    color: white;
+    background: url("images/edit.png");
     margin-left: 5px;
 }
 

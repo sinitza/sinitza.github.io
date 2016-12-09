@@ -10,6 +10,12 @@ window.addEventListener('load', function () {
     editButton.className = 'edit';
     removeButton.className = 'remove';
 
+    if (localStorage.getItem('items')) {
+        arrayTasks = JSON.parse(localStorage.getItem('items'));
+    } else {
+        arrayTasks = [];
+    }
+
     view();
 
     input.addEventListener('keypress', function (event) {
@@ -21,11 +27,6 @@ window.addEventListener('load', function () {
     document.getElementById('add').addEventListener('click', add);
 
     function add() {
-        if (localStorage.getItem('items')) {
-            arrayTasks = JSON.parse(localStorage.getItem('items'));
-        } else {
-            arrayTasks = [];
-        }
         if (input.value) {
             arrayTasks.push({
                 value: input.value,
@@ -40,12 +41,10 @@ window.addEventListener('load', function () {
     }
 
     function view() {
-        var array = JSON.parse(localStorage.getItem('items')) || [];
-
-        for (var i = 0; i < array.length; i++) {
+         for (var i = 0; i < arrayTasks.length; i++) {
             var li = document.createElement('li');
-            li.innerText = array[i].value;
-            if (array[i].done === true) {
+            li.innerText = arrayTasks[i].value;
+            if (arrayTasks[i].done === true) {
                 li.classList.add('checked');
             }
             var editBtn = editButton.cloneNode();
@@ -61,10 +60,8 @@ window.addEventListener('load', function () {
     }
 
     function render() {
-        var array = JSON.parse(localStorage.getItem('items'));
-
         var li = document.createElement('li');
-        li.innerText = array[array.length - 1].value;
+        li.innerText = arrayTasks[arrayTasks.length - 1].value;
         var editBtn = editButton.cloneNode();
         var removeBtn = removeButton.cloneNode();
         editBtn.addEventListener('click', editHandler);
@@ -77,8 +74,6 @@ window.addEventListener('load', function () {
     }
 
     function editHandler(event) {
-        var array = JSON.parse(localStorage.getItem('items'));
-
         this.classList.add('checked');
         popup.style.display = 'block';
         var inputEdit = document.getElementById('edit-input');
@@ -92,12 +87,12 @@ window.addEventListener('load', function () {
                 btnEdit.classList.remove('checked');
                 popup.style.display = 'none';
             }
-            for (var i = 0; i < array.length; i++) {
-                if (array[i].value === a) {
-                    array[i].value = inputEdit.value;
+            for (var i = 0; i < arrayTasks.length; i++) {
+                if (arrayTasks[i].value === a) {
+                    arrayT[i].value = inputEdit.value;
                 }
             }
-            localStorage.setItem('items', JSON.stringify(array));
+            localStorage.setItem('items', JSON.stringify(arrayTasks));
         });
 
         document.getElementById('cancel').addEventListener('click', function (event) {
@@ -106,39 +101,34 @@ window.addEventListener('load', function () {
     }
 
     function removeHandler() {
-        var array = JSON.parse(localStorage.getItem('items'));
         var index;
-        console.log(this.parentElement.innerText);
-        for (var i = 0; i < array.length; i++) {
-            if (array[i].value === this.parentElement.innerText) {
+        for (var i = 0; i < arrayTasks.length; i++) {
+            if (arrayTasks[i].value === this.parentElement.innerText) {
                 index = i;
                 this.parentElement.remove();
             }
         }
-        array.splice(index, 1);
+        arrayTasks.splice(index, 1);
 
-        localStorage.setItem('items', JSON.stringify(array));
+        localStorage.setItem('items', JSON.stringify(arrayTasks));
         recount();
     }
 
     function select(event) {
-        var array = JSON.parse(localStorage.getItem('items'));
         if (event.target.tagName == 'LI') {
-            console.log(event);
             var el = event.toElement;
             el.classList.toggle('checked');
 
-            for (var i = 0; i < array.length; i++) {
-                if (el.className === 'checked' && array[i].value === el.firstChild.nodeValue) {
-                    array[i].done = true;
+            for (var i = 0; i < arrayTasks.length; i++) {
+                if (el.className === 'checked' && arrayTasks[i].value === el.firstChild.nodeValue) {
+                    arrayTasks[i].done = true;
                 } else {
-                    array[i].done = false;
+                    arrayTasks[i].done = false;
                     recount();
                 }
-                console.log(array[i].done);
             }
 
-            localStorage.setItem('items', JSON.stringify(array));
+            localStorage.setItem('items', JSON.stringify(arrayTasks));
         }
     }
 
@@ -148,5 +138,75 @@ window.addEventListener('load', function () {
         var count = totalCount - doneCount;
         document.getElementById('items-count').innerHTML = count + ' items to do / ' + doneCount + ' items done';
     }
+
+    function dragNDrop(todoEl){
+        var dragEl, nextEl, indexDragEl, indexNextEl;
+
+
+        [].slice.call(todoEl.children).forEach(function (itemEl){
+            itemEl.draggable = true;
+        });
+
+        function _onDragOver(event){
+            event.preventDefault();
+            event.dataTransfer.dropEffect = 'move';
+
+            var target = event.target;
+            if( target && target !== dragEl && target.nodeName == 'LI' ){
+                var rect = target.getBoundingClientRect();
+                var next = (event.clientY - rect.top)/(rect.bottom - rect.top) > .5;
+                todoEl.insertBefore(dragEl, next && target.nextSibling || target);
+
+                nextEl=target.textContent;
+            }
+        }
+
+        function _onDragEnd(event){
+            event.preventDefault();
+            dragEl.classList.remove('ghost');
+            todoEl.removeEventListener('dragover', _onDragOver, false);
+            todoEl.removeEventListener('dragend', _onDragEnd, false);
+        }
+
+        todoEl.addEventListener('dragstart', function (event){
+            dragEl = event.target;
+            event.dataTransfer.effectAllowed = 'move';
+            event.dataTransfer.setData('Text', dragEl.textContent);
+
+            todoEl.addEventListener('dragover', _onDragOver, false);
+            todoEl.addEventListener('dragend', _onDragEnd, false);
+
+            for (var i = 0; i < arrayTasks.length; i++) {
+                if (arrayTasks[i].value == dragEl.textContent) {
+                    indexDragEl = i;
+                    var content = arrayTasks[i];
+                    console.log('indexDragEl', i);
+                }
+            }
+
+            for (var j = 0; j < arrayTasks.length; j++) {
+                if (arrayTasks[j].value == nextEl) {
+                    indexNextEl = j;
+                    console.log('indexNextEl', j);
+                }
+            }
+
+            if (indexDragEl > indexNextEl) {
+                arrayTasks.splice(indexDragEl, 1);
+                arrayTasks.splice(indexNextEl, 0, content);
+                localStorage.setItem('items', JSON.stringify(arrayTasks));
+            } else {
+                arrayTasks.splice(indexNextEl+1, 0, content);
+                arrayTasks.splice(indexDragEl, 1);
+                localStorage.setItem('items', JSON.stringify(arrayTasks));
+            }
+
+            setTimeout(function (){
+                dragEl.classList.add('ghost');
+            }, 0)
+        }, false);
+    }
+
+    dragNDrop(document.getElementById('todo'));
 
 })

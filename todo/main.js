@@ -70,6 +70,7 @@ window.addEventListener('load', function () {
         li.appendChild(removeBtn);
         li.onclick = select;
         ul.appendChild(li);
+        dragNDrop(document.getElementById('todo'));
         recount();
     }
 

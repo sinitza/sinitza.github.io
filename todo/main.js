@@ -205,6 +205,11 @@ window.addEventListener('load', function () {
                 dragEl.classList.add('ghost');
             }, 0)
         }, false);
+
+        document.onselectstart = function()
+        {
+            window.getSelection().removeAllRanges();
+        };
     }
 
     dragNDrop(document.getElementById('todo'));

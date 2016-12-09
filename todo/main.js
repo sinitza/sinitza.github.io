@@ -192,8 +192,8 @@ window.addEventListener('load', function () {
             }
 
             if (indexDragEl > indexNextEl) {
-                arrayTasks.splice(indexDragEl, 1);
                 arrayTasks.splice(indexNextEl, 0, content);
+                arrayTasks.splice(indexDragEl+1, 1);
                 localStorage.setItem('items', JSON.stringify(arrayTasks));
             } else {
                 arrayTasks.splice(indexNextEl+1, 0, content);

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ToDojQuery</title>
+    <link href="style.css" rel="stylesheet" type="text/css" >
+    <link href="node_modules/materialize-css/dist/css/materialize.min.css" rel="stylesheet" type="text/css" >
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="node_modules/materialize-css/dist/js/materialize.min.js"></script>
+    <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+</head>
+<body>
+<h1>ToDo LIST</h1>
+
+<div class="row valign-wrapper">
+    <div class="input-field col s8">
+        <input id="todo" type="text" class="validate">
+        <label for="todo" class="black-text">Enter Task</label>
+    </div>
+    <div class="col s4">
+        <button id="add" class="waves-effect waves-light btn black-text" >Add</button>
+    </div>
+</div>
+
+
+
+<ul id="list" class="collection row"></ul>
+<p id="items-count"></p>
+
+<div id="popup">
+    <input type="text" id="edit-input">
+    <button id="save" class="waves-effect waves-light btn black-text">Save</button>
+    <button id="cancel" class="waves-effect waves-light btn black-text">Cancel</button>
+</div>
+
+<script src="main.js"></script>
+
+</body>
+</html>

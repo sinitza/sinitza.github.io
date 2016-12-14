@@ -141,7 +141,7 @@ window.addEventListener('load', function () {
     }
 
     function dragNDrop(todoEl){
-        var dragEl, nextEl, indexDragEl, indexNextEl, content, startPos = 0, endPos = 0;
+        var dragEl, nextEl, indexDragEl, content, startPos = 0, endPos = 0;
 
         [].slice.call(todoEl.children).forEach(function (itemEl){
             itemEl.draggable = true;
@@ -170,6 +170,8 @@ window.addEventListener('load', function () {
             todoEl.removeEventListener('dragover', _onDragOver, false);
             todoEl.removeEventListener('dragend', _onDragEnd, false);
 
+
+
             if (startPos > endPos) {
                 arrayTasks.splice(endPos, 0, arrayTasks[startPos]);
                 arrayTasks.splice(startPos + 1, 1);
@@ -177,7 +179,9 @@ window.addEventListener('load', function () {
                 arrayTasks.splice(endPos + 1, 0, arrayTasks[startPos]);
                 arrayTasks.splice(startPos, 1);
             }
+
             localStorage.setItem('items', JSON.stringify(arrayTasks));
+
         }
 
         todoEl.addEventListener('dragstart', function (event){
@@ -193,16 +197,6 @@ window.addEventListener('load', function () {
 
             todoEl.addEventListener('dragover', _onDragOver, false);
             todoEl.addEventListener('dragend', _onDragEnd, false);
-
-
-            for (var j = 0; j < arrayTasks.length; j++) {
-                if (arrayTasks[j].value == dragEl.textContent) {
-                    indexDragEl = j;
-                    // console.log('dragEl', j);
-                    var content = arrayTasks[j];
-
-                }
-            }
 
             setTimeout(function (){
                 dragEl.classList.add('ghost');

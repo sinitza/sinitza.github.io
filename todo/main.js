@@ -41,7 +41,7 @@ window.addEventListener('load', function () {
     }
 
     function view() {
-         for (var i = 0; i < arrayTasks.length; i++) {
+        for (var i = 0; i < arrayTasks.length; i++) {
             var li = document.createElement('li');
             li.innerText = arrayTasks[i].value;
             if (arrayTasks[i].done === true) {

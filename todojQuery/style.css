@@ -86,7 +86,3 @@ div#popup {
     overflow: auto;
     background-color: rgba(0,0,0,0.4);
 }
-
-.ghost {
-    opacity: .4;
-}

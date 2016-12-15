@@ -10,6 +10,7 @@ $(function () {
         arrayTasks = [];
     }
 
+    //виведення елементів з localStorage
     view();
 
     //додавання елементу по кнопці
@@ -21,6 +22,7 @@ $(function () {
        }
     });
 
+    //cтворення елементу списку
     function drawItem(item) {
          var li = $('<li class="collection-item"><span class="text">' + item.value +
                    '</span><i class="material-icons edit right">mode_edit</i>' +
@@ -29,6 +31,8 @@ $(function () {
          if (item.complete == true) {
              li.addClass('done');
          }
+
+        recount();
 
         //видалення елементу
         li.find('.remove').click(function (event) {
@@ -40,6 +44,7 @@ $(function () {
                     }
                 }
                 localStorage.setItem('items', JSON.stringify(arrayTasks));
+                recount();
             });
 
         //редагування елементу
@@ -78,11 +83,13 @@ $(function () {
                 'value': input.val(),
                 'complete': false
             });
+            recount();
             localStorage.setItem('items', JSON.stringify(arrayTasks));
             input.val('');
         }
     }
 
+    //drag'n'drop
     ul.sortable({
         start: function(event, ui) {
             var startPos = ui.item.index();
@@ -103,8 +110,10 @@ $(function () {
             localStorage.setItem('items', JSON.stringify(arrayTasks));
         }
     })
+        //позначення виконаного елементу
         .click(function (event) {
             $(event.target).closest('li').toggleClass('done');
+            recount();
             if ($(event.target).closest('li').hasClass('done')) {
                 for (i = 0; i < arrayTasks.length; i++) {
                     if ($(event.target).closest('li').find('.text').text() == arrayTasks[i].value) {
@@ -121,10 +130,20 @@ $(function () {
             localStorage.setItem('items', JSON.stringify(arrayTasks));
         });
 
+    //функція виведення елементів з localStorage
     function view() {
         for (var i = 0; i < arrayTasks.length; i++) {
             drawItem(arrayTasks[i]);
+            recount();
         }
+    }
+
+    // функція, що рахує кількість елементів
+    function recount() {
+        var totalCount = $('li').length;
+        var doneCount = $('li.done').length;
+        var count = totalCount - doneCount;
+        $('#items-count').html(count + ' items to do / ' + doneCount + ' items done');
     }
 
 });
